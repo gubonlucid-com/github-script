@@ -1,5 +1,51 @@
 # actions/github-script
+AI_GATEWAY_API_KEY=your_ai_gateway_api_keyimport { streamText } from 'ai';
+import 'dotenv/config';
 
+async function main() {
+  const result = streamText({
+    model: 'openai/gpt-5.5',
+    prompt: 'Invent a new holiday and describe its traditions.',
+  });
+
+  for await (const textPart of result.textStream) {
+    process.stdout.write(textPart);
+  }
+
+  console.log();
+  console.log('Token usage:', await result.usage);
+  console.log('Finish reason:', await result.finishReason);
+}
+
+main().catch(console.error);pnpm tsx index.tsHelp me set up AI Gateway in this project.
+
+1. Install dependencies:
+npm install ai
+
+2. Pull Vercel environment variables locally:
+vc env pull .env.local
+
+This pulls VERCEL_OIDC_TOKEN, so no AI Gateway API key is needed.
+
+3. Create an index.mjs file:
+import { streamText } from 'ai'
+
+const result = streamText({
+  model: 'openai/gpt-5.5',
+  prompt: 'Explain quantum computing in simple terms.',
+})
+
+for await (const chunk of result.textStream) {
+  process.stdout.write(chunk)
+}
+
+4. Run the script:
+node --env-file=.env.local index.mjsimport { streamText } from 'ai'
+
+const result = streamText({
+  model: 'openai/gpt-5.5',
+  prompt: 'Why is the sky blue?'
+})
 [![Integration](https://github.com/actions/github-script/actions/workflows/integration.yml/badge.svg?branch=main&event=push)](https://github.com/actions/github-script/actions/workflows/integration.yml)
 [![CI](https://github.com/actions/github-script/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/actions/github-script/actions/workflows/ci.yml)
 [![Licensed](https://github.com/actions/github-script/actions/workflows/licensed.yml/badge.svg?branch=main&event=push)](https://github.com/actions/github-script/actions/workflows/licensed.yml)
